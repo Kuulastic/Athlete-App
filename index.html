@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101722">
+  <title>ATHLETE — Training Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="session-guide.css">
+  <link rel="stylesheet" href="progress.css">
+  <link rel="stylesheet" href="workout-builder.css">
+  <link rel="stylesheet" href="dunk-goal.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" data-view="dashboard"><span class="brand-mark">A</span><span>ATHLETE<small>TRAINING SYSTEM</small></span></a>
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="workouts"><span>☷</span> Workouts</button>
+        <button class="nav-item" data-view="builder"><span>＋</span> Workout Builder</button>
+        <button class="nav-item" data-view="history"><span>◷</span> History</button>
+        <button class="nav-item" data-view="progress"><span>↗</span> Dunking Progress</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-note"><span class="live-dot"></span> LOCAL MODE <small>Your data stays on this device.</small></div>
+        <div class="version">ATHLETE · v1.0</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow" id="today-label">YOUR TRAINING SPACE</div>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <span class="week-pill" id="training-week-label">WEEK A</span>
+          <span class="today-pill" id="date-pill"></span>
+          <button class="icon-button mobile-menu" id="menu-button" aria-label="Open menu">☰</button>
+        </div>
+      </header>
+
+      <section id="dashboard-view" class="view active">
+        <div class="welcome-row">
+          <div><p class="eyebrow">BUILD POWER. TRACK PROGRESS.</p><h2>Train with intention.</h2><p class="muted">Your gym sessions, basketball support work, and progress in one place.</p></div>
+          <div class="streak-card"><span class="eyebrow">SESSIONS LOGGED</span><strong id="session-count">0</strong><span class="muted tiny">Keep showing up.</span></div>
+        </div>
+        <div class="section-heading"><div><span class="eyebrow">YOUR WEEK</span><h3>Training schedule</h3></div><button class="text-button" data-view="workouts">All workouts ↗</button></div>
+        <div class="workout-grid" id="dashboard-workouts"></div>
+        <div class="dashboard-bottom">
+          <div class="panel">
+            <div class="section-heading compact"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Training history</h3></div><button class="text-button" data-view="history">View all</button></div>
+            <div id="recent-history" class="recent-list"><div class="empty-state">Your completed sessions will appear here.</div></div>
+          </div>
+          <div class="panel jump-panel">
+            <span class="eyebrow">YOUR ATHLETIC GOAL</span><h3>Build toward your first dunk.</h3>
+            <p class="muted">Track your jump measurements over time. Consistency, quality reps, and recovery matter.</p>
+            <label class="field-label" for="jump-input">Standing reach / vertical note</label>
+            <div class="inline-form"><input id="jump-input" type="text" placeholder="e.g. 10' reach, 26'' vertical"><button class="primary small" id="save-jump">Save note</button></div>
+            <div id="jump-note" class="tiny muted"></div>
+            <section class="dunk-goal-calculator" aria-labelledby="dunk-goal-title">
+              <div class="dunk-goal-heading"><span class="eyebrow">ATHLETIC GOALS</span><h3 id="dunk-goal-title">Dunk Goal Calculator</h3></div>
+              <p class="muted tiny">Estimate the jump you need from your standing reach. Touching or grabbing the rim is different from clearing it with the ball.</p>
+              <div class="dunk-goal-inputs">
+                <label>Standing reach (in)<input id="dunk-standing-reach" class="field-input" type="number" min="1" max="120" step="0.1" inputmode="decimal" placeholder="Required"></label>
+                <label>Rim height (in)<input id="dunk-rim-height" class="field-input" type="number" min="1" max="240" step="0.1" inputmode="decimal" value="120" required></label>
+                <label>Desired dunk clearance (in)<input id="dunk-clearance" class="field-input" type="number" min="0" max="48" step="0.1" inputmode="decimal" value="6" required></label>
+                <label>Current vertical jump (in)<input id="dunk-current-vertical" class="field-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="Enter your measurement"></label>
+              </div>
+              <div class="dunk-goal-main" aria-live="polite">
+                <div><span class="eyebrow">DUNK TARGET</span><strong id="dunk-required-target">Enter your measurements</strong></div>
+                <div class="dunk-goal-current"><span class="muted tiny">Your current vertical</span><strong id="dunk-current-value">Not entered</strong></div>
+              </div>
+              <div class="dunk-goal-progress-copy"><span>Progress toward dunk target</span><strong id="dunk-remaining">Enter standing reach and vertical</strong></div>
+              <div class="dunk-goal-track" role="progressbar" aria-label="Progress toward dunk target" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="dunk-progress-fill"></div></div>
+              <div id="dunk-goal-progress-detail" class="muted tiny">Uses standing reach, rim height, and your selected clearance.</div>
+              <div class="dunk-milestones" id="dunk-milestones" aria-live="polite"></div>
+              <p class="dunk-goal-disclaimer">Estimate only. Actual dunking also depends on ball control, hand size, approach, and technique.</p>
+              <div class="dunk-goal-actions"><button class="primary small" id="save-dunk-goal" type="button">Save measurements</button></div>
+              <div id="dunk-goal-status" class="tiny muted" role="status"></div>
+              <details class="dunk-goal-history">
+                <summary>Previous measurements</summary>
+                <div id="dunk-goal-history-list" class="dunk-goal-history-list"></div>
+              </details>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="workouts-view" class="view">
+        <div class="view-intro"><div><span class="eyebrow">YOUR PROGRAM</span><h2>Choose a session.</h2><p class="muted">Review the exercise order, adjust rest settings, then start when you're ready.</p></div></div>
+        <div id="workout-list" class="workout-list"></div>
+      </section>
+
+      <section id="builder-view" class="view">
+        <div class="view-intro"><div><span class="eyebrow">PERSONALIZE YOUR TRAINING</span><h2>Workout Builder.</h2><p class="muted">Create reusable exercises and custom workouts. Changes stay on this device.</p></div></div>
+        <div id="builder-status" class="builder-status" role="status" hidden></div>
+        <div class="builder-layout">
+          <section class="panel builder-workouts-panel">
+            <div class="section-heading compact"><div><span class="eyebrow">YOUR CUSTOM WORKOUTS</span><h3>Manage workouts</h3></div><button id="builder-new-workout" class="primary small" type="button">New workout</button></div>
+            <div id="builder-workout-list" class="builder-workout-list"></div>
+          </section>
+          <section class="panel builder-editor-panel">
+            <span class="eyebrow">WORKOUT EDITOR</span><h3 id="builder-workout-heading">Create a workout</h3>
+            <form id="builder-workout-form">
+              <label class="builder-field">Workout name<input id="builder-workout-name" class="field-input" maxlength="80" required></label>
+              <label class="builder-field">Description <span class="muted tiny">Optional</span><textarea id="builder-workout-description" class="field-input" maxlength="400" rows="2"></textarea></label>
+              <label class="builder-field">Scheduled day<select id="builder-workout-day" class="field-input"><option value="">Unscheduled</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></label>
+              <div class="section-heading compact"><div><span class="eyebrow">WORKOUT STRUCTURE</span><h3>Sections and exercises</h3></div><button id="builder-add-section" class="secondary" type="button">Add section</button></div>
+              <div id="builder-sections" class="builder-sections"></div>
+              <div class="builder-add-exercise">
+                <label class="builder-field">Add from exercise library<select id="builder-add-exercise-select" class="field-input"></select></label>
+                <label class="builder-field">To section<select id="builder-add-section-select" class="field-input"></select></label>
+                <button id="builder-add-exercise" type="button" class="secondary">Add exercise</button>
+              </div>
+              <div class="builder-form-actions"><button class="primary" type="submit">Save workout</button><button id="builder-cancel-workout" class="secondary" type="button">Cancel</button></div>
+            </form>
+          </section>
+          <section class="panel builder-library-panel">
+            <div class="section-heading compact"><div><span class="eyebrow">REUSABLE MOVEMENTS</span><h3>Exercise library</h3></div><button id="builder-new-exercise" class="primary small" type="button">New exercise</button></div>
+            <div class="builder-library-filters"><label class="builder-field">Search<input id="builder-library-search" class="field-input" type="search" placeholder="Exercise name"></label><label class="builder-field">Category<select id="builder-library-category" class="field-input"><option value="">All categories</option></select></label></div>
+            <div id="builder-exercise-list" class="builder-exercise-list"></div>
+            <form id="builder-exercise-form" hidden>
+              <div class="section-heading compact"><div><span class="eyebrow">EXERCISE DETAILS</span><h3 id="builder-exercise-heading">Create an exercise</h3></div></div>
+              <label class="builder-field">Exercise name<input id="builder-exercise-name" class="field-input" maxlength="80" required></label>
+              <label class="builder-field">Category or muscle group<input id="builder-exercise-category" class="field-input" maxlength="60" placeholder="e.g. Core"></label>
+              <label class="builder-field">Instructions<textarea id="builder-exercise-instructions" class="field-input" maxlength="1200" rows="4" placeholder="Describe setup, movement, and useful technique cues."></textarea></label>
+              <div class="builder-numeric-fields"><label class="builder-field">Sets<input id="builder-exercise-sets" class="field-input" type="number" min="1" max="30" value="3"></label><label class="builder-field">Reps / hold<input id="builder-exercise-reps" class="field-input" maxlength="30" placeholder="e.g. 8-12"></label><label class="builder-field">Duration per set (seconds)<input id="builder-exercise-duration" class="field-input" type="number" min="1" max="3600" step="1" placeholder="If no reps"></label><label class="builder-field">Rest (seconds)<input id="builder-exercise-rest" class="field-input" type="number" min="0" max="600" step="5" value="90"></label></div>
+              <label class="builder-field">Optional weight / load<input id="builder-exercise-weight" class="field-input" maxlength="60" placeholder="e.g. bodyweight or 20 kg"></label>
+              <div class="builder-field"><span>Exercise image</span><button id="builder-upload-image" class="secondary" type="button">Upload Exercise Image</button><input id="builder-exercise-image" class="builder-file-input" type="file" aria-label="Choose an exercise image" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"><span class="muted tiny">Choose JPG, JPEG, PNG, or WEBP. The image is stored on this device.</span></div>
+              <div id="builder-image-preview" class="builder-image-preview" hidden></div>
+              <div class="builder-image-actions"><button id="builder-remove-image" class="secondary" type="button" hidden>Remove image</button></div>
+              <div class="builder-form-actions"><button class="primary" type="submit">Save exercise</button><button id="builder-cancel-exercise" class="secondary" type="button">Cancel</button></div>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section id="session-view" class="view">
+        <div class="session-header">
+          <div><button class="back-button" id="back-to-workouts">← Workouts</button><span class="eyebrow" id="session-day-label">TUESDAY · GYM</span><h2 id="session-title">Lower body</h2><p class="muted" id="session-subtitle"></p></div>
+          <div class="session-actions"><button class="secondary" id="reset-session">Reset</button><button class="primary" id="finish-session">Finish session</button></div>
+        </div>
+        <div class="session-layout">
+          <div class="timeline-column">
+            <div class="session-progress"><div class="progress-meta"><span id="progress-text">0 of 0 complete</span><span id="progress-percent">0%</span></div><div class="progress-track"><div id="progress-bar"></div></div></div>
+            <div id="timeline" class="timeline"></div>
+          </div>
+          <aside class="timer-column">
+            <div class="timer-card">
+              <div class="timer-top"><span class="eyebrow">SESSION GUIDE</span><span class="timer-state" id="timer-state">READY</span></div>
+              <div class="timer-caption" id="timer-caption">Start whenever you're ready. The timer will keep running while you rest.</div>
+              <div class="timer-next"><span class="eyebrow">PLANNED SESSION</span><strong id="timer-next-name">Ready when you are</strong><small id="timer-next-detail">Estimates are a guide, not a deadline.</small></div>
+              <div class="timer-controls"><button class="primary full" id="timer-start">Start Session</button></div>
+              <div class="timer-footnote">Take the time you need to learn movements, set up, and recover between sets.</div>
+            </div>
+            <div class="session-settings-mini"><span class="eyebrow">ESTIMATED SESSION</span><strong id="estimated-duration">—</strong><small>Based on current rest settings</small></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="history-view" class="view">
+        <div class="view-intro"><div><span class="eyebrow">YOUR WORK</span><h2>Training history.</h2><p class="muted">Completed sessions and notes saved on this device.</p></div></div>
+        <div id="history-list" class="history-list"></div>
+      </section>
+
+      <section id="progress-view" class="view">
+        <div class="view-intro"><div><span class="eyebrow">JUMP DEVELOPMENT</span><h2>Dunking Progress.</h2><p class="muted">Track strength and bodyweight trends separately from workout completion. Benchmarks are rough reference estimates, not requirements or guarantees of dunking ability.</p></div></div>
+        <div class="progress-grid">
+          <section class="panel progress-panel">
+            <div class="progress-section-heading"><div><span class="eyebrow">BODYWEIGHT</span><h3>Your weight history</h3></div><div class="progress-unit-control"><label for="bodyweight-unit">Unit</label><select id="bodyweight-unit"><option value="kg">kg</option><option value="lb">lb</option></select></div></div>
+            <p class="muted progress-explanation">New entries are dated. Your latest entry is used to calculate relative strength; changing it does not rewrite older entries.</p>
+            <form id="bodyweight-form" class="progress-entry-form"><label>Bodyweight <input id="bodyweight-value" type="number" min="1" step="0.1" required></label><label>Date <input id="bodyweight-date" type="date" required></label><button class="primary" type="submit" id="bodyweight-save">Save bodyweight</button><button class="secondary" type="button" id="bodyweight-cancel" hidden>Cancel edit</button></form>
+            <div class="bodyweight-current"><span class="eyebrow">LATEST RECORDED BODYWEIGHT</span><strong id="bodyweight-latest">Not recorded yet</strong></div>
+            <div id="bodyweight-chart" class="progress-chart" role="img" aria-label="Bodyweight history graph"></div>
+            <div id="bodyweight-history" class="progress-history"></div>
+          </section>
+          <section class="panel progress-panel benchmark-settings"><span class="eyebrow">REFERENCE LEVELS</span><h3>Strength benchmark multipliers</h3><p class="muted progress-explanation">Relative load = recorded external load ÷ latest bodyweight. Target load = latest bodyweight × the level multiplier. Repetitions are shown but are not converted into estimated maxes. Edit these rough references to suit your training; they are not validated dunking thresholds.</p><div id="benchmark-editor" class="benchmark-editor"></div><button class="secondary" id="save-benchmarks">Save benchmark levels</button></section>
+        </div>
+        <div class="section-heading progress-lifts-heading"><div><span class="eyebrow">STRENGTH DEVELOPMENT</span><h3>Lift history and estimated reference targets</h3></div></div>
+        <p class="muted progress-explanation">Record the external load used for the listed reps. Bulgarian split squats are recorded per hand; other lifts are recorded as total external load. Trap bar jumps are kept separate from regular strength lifts: use controlled, fast reps and appropriate technique rather than chasing heavier loads.</p>
+        <form id="lift-form" class="panel lift-entry-form"><label class="lift-exercise-field"><span>Exercise</span><select id="lift-exercise"></select></label><label class="lift-load-field"><span>Load</span><div class="lift-load-control"><input id="lift-weight" type="number" min="0" step="0.5" required><select id="lift-entry-unit" aria-label="Load unit"><option value="kg">kg</option><option value="lb">lb</option></select></div></label><label><span>Repetitions</span><input id="lift-reps" type="number" min="1" step="1" value="1" required></label><label><span>Date</span><input id="lift-date" type="date" required></label><button class="primary" type="submit" id="lift-save">Save performance</button><button class="secondary" type="button" id="lift-cancel" hidden>Cancel edit</button></form>
+        <div id="lift-progress-list" class="lift-progress-list"></div>
+      </section>
+
+      <section id="settings-view" class="view">
+        <div class="view-intro"><div><span class="eyebrow">MAKE IT YOURS</span><h2>Training preferences.</h2><p class="muted">Set default rest times. Individual exercise overrides can be changed from each exercise card.</p></div></div>
+        <div class="settings-grid">
+          <div class="panel settings-panel">
+            <span class="eyebrow">WEEK ROTATION</span><h3>Training week</h3>
+            <div class="setting-row"><div><strong id="training-week-setting-label">Current week: A</strong><small>Automatically alternates each Monday. Correct this if your schedule needs it.</small></div><div class="setting-input"><select id="training-week-select" aria-label="Current training week"><option value="A">Week A</option><option value="B">Week B</option></select></div></div>
+          </div>
+          <div class="panel settings-panel">
+            <span class="eyebrow">REST PERIODS</span><h3>Default rest settings</h3>
+            <div class="setting-row"><div><strong>Between sets</strong><small>Used unless an exercise has its own setting.</small></div><div class="setting-input"><input id="default-set-rest" type="number" min="0" max="600" step="15"><span>sec</span></div></div>
+            <div class="setting-row"><div><strong>Between exercises</strong><small>Transition/rest after finishing an exercise.</small></div><div class="setting-input"><input id="default-exercise-rest" type="number" min="0" max="600" step="15"><span>sec</span></div></div>
+            <button class="primary" id="save-settings">Save preferences</button>
+          </div>
+          <div class="panel settings-panel">
+            <span class="eyebrow">SESSION PACING</span><h3>Available session time</h3>
+            <div class="setting-row"><div><strong>Tuesday · Lower body</strong><small>Gym strength and power session</small></div><div class="setting-input"><input id="tuesday-duration" type="number" min="30" max="240" step="5"><span>min</span></div></div>
+            <div class="setting-row"><div><strong>Friday · Upper body</strong><small>Gym strength and hypertrophy</small></div><div class="setting-input"><input id="friday-duration" type="number" min="30" max="240" step="5"><span>min</span></div></div>
+            <div class="setting-row"><div><strong>Saturday · Recovery</strong><small>After Dreamers basketball training</small></div><div class="setting-input"><input id="saturday-duration" type="number" min="10" max="120" step="5"><span>min</span></div></div>
+            <p class="tiny muted">These are planning windows, not targets. Don't rush rest periods or extend training just to fill the available time.</p>
+            <button class="secondary" id="save-durations">Save session times</button>
+          </div>
+        </div>
+        <div class="panel settings-panel overrides-panel"><span class="eyebrow">EXERCISE-SPECIFIC REST</span><h3>Rest overrides</h3><p class="muted">Set a custom rest between sets for individual exercises. Leave blank to use your default.</p><div id="override-list"></div></div>
+        <div class="panel settings-panel"><span class="eyebrow">DATA</span><h3>Your training data</h3><p class="muted">Your data is stored in this browser. Export a backup before switching devices or clearing browser data.</p><div class="button-row"><button class="secondary" id="export-data">Export backup</button><label class="secondary file-button">Import backup<input id="import-data" type="file" accept="application/json"></label><button class="danger-ghost" id="clear-data">Clear local data</button></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="exercise-modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <section class="session-timer-popup" id="session-timer-popup" aria-label="Overall session timer" hidden>
+    <div class="session-timer-header">
+      <span class="eyebrow">SESSION TIMER · GUIDE</span>
+      <div class="session-timer-actions">
+        <button class="timer-popup-button" id="session-timer-minimize" aria-label="Minimize session timer">−</button>
+        <button class="timer-popup-button" id="session-timer-dismiss" aria-label="Dismiss session timer">×</button>
+      </div>
+    </div>
+    <div class="session-timer-compact"><strong class="session-timer-clock" id="session-elapsed-compact">00:00:00</strong><div class="session-estimate-track"><div id="session-estimate-bar-compact"></div></div><div class="session-timer-compact-meta"><span id="session-exercise-progress-compact">0 / 0 exercises</span><button class="timer-popup-button" id="session-timer-expand" aria-label="Expand session timer">+</button></div></div>
+    <div class="session-timer-details">
+      <strong class="session-timer-clock" id="session-elapsed">00:00</strong>
+      <div class="session-estimate-label" id="session-estimate-label">Estimated plan progress · 0%</div>
+      <div class="session-estimate-track"><div id="session-estimate-bar"></div></div>
+      <div class="session-estimated-exercise"><span class="eyebrow">ESTIMATED CURRENT EXERCISE</span><strong id="session-estimated-exercise">Ready when you are</strong></div>
+      <div class="session-timer-footer"><span id="session-exercise-progress">0 / 0 exercises complete</span><button class="text-button" id="session-timer-return">Open workout ↗</button></div>
+      <p>Guide only — take the time you need.</p>
+    </div>
+  </section>
+  <button class="session-timer-reopen" id="session-timer-reopen" hidden>Show session timer</button>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="exercise-images.js"></script>
+  <script src="app.js"></script>
+  <script src="workout-builder.js"></script>
+</body>
+</html>

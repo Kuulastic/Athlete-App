@@ -1,0 +1,31 @@
+.dunk-goal-calculator{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}
+.dunk-goal-heading h3{margin-top:5px}
+.dunk-goal-calculator>p{margin:8px 0}
+.dunk-goal-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:16px}
+.dunk-goal-inputs label{display:grid;gap:6px;color:#c6d1de;font-size:11px}
+.dunk-goal-inputs .field-input{width:100%;min-height:42px}
+.dunk-goal-main{display:flex;justify-content:space-between;align-items:center;gap:14px;background:linear-gradient(145deg,#243a2b,#1b2b2c);border:1px solid #40583c;border-radius:12px;padding:14px;margin-top:16px}
+.dunk-goal-main>div,.dunk-goal-current{display:grid;gap:5px}
+.dunk-goal-main>div>strong{font-size:clamp(20px,4vw,27px);letter-spacing:-.04em}
+.dunk-goal-current{text-align:right}
+.dunk-goal-current strong{font-size:16px}
+.dunk-goal-progress-copy{display:flex;justify-content:space-between;gap:12px;margin:15px 0 7px;font-size:11px}
+.dunk-goal-progress-copy strong{text-align:right}
+.dunk-goal-track{height:8px;background:#29394b;border-radius:10px;overflow:hidden}
+.dunk-goal-track>div{height:100%;width:0;background:var(--accent);border-radius:10px;transition:width .25s}
+.dunk-goal-progress-detail{margin-top:6px}
+.dunk-milestones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:14px}
+.dunk-milestone{display:grid;gap:5px;align-content:start;background:#101a26;border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}
+.dunk-milestone.featured{border-color:#718d4a;background:#202d25}
+.dunk-milestone>span{font-size:10px;font-weight:800;color:#c6d1de}
+.dunk-milestone>strong{font-size:12px}
+.dunk-milestone>small{font-size:10px;color:var(--muted)}
+.dunk-goal-disclaimer{font-size:10px;line-height:1.55;color:var(--muted);margin:13px 0 8px!important}
+.dunk-goal-actions{display:flex;justify-content:flex-end;margin-top:11px}
+.dunk-goal-history{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;font-size:11px}
+.dunk-goal-history summary{cursor:pointer;color:#c6d1de;font-weight:700}
+.dunk-goal-history-list{display:grid;gap:8px;margin-top:10px}
+.dunk-goal-history-item{display:grid;gap:3px;padding:9px;background:#101a26;border-radius:8px}
+.dunk-goal-history-item span{color:var(--muted);line-height:1.5}
+#dunk-goal-status{min-height:17px;margin-top:7px}
+@media(max-width:600px){.dunk-goal-inputs{gap:9px}.dunk-goal-inputs label{font-size:10px}.dunk-goal-main{align-items:flex-start;flex-direction:column}.dunk-goal-current{text-align:left}.dunk-milestones{grid-template-columns:1fr}.dunk-milestone{grid-template-columns:1fr 1fr}.dunk-milestone small{grid-column:1/-1}.dunk-goal-progress-copy{align-items:flex-start;flex-direction:column;gap:4px}.dunk-goal-progress-copy strong{text-align:left}}

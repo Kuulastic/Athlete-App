@@ -1,0 +1,26 @@
+.week-pill{border:1px solid #40583c;border-radius:30px;background:#1b2b2c;color:var(--accent);padding:9px 13px;font-size:10px;font-weight:850;letter-spacing:.1em;white-space:nowrap}
+.setting-input select{width:90px;background:#0e1824;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:9px}
+.timer-top .timer-state{margin:0}
+.session-timer-popup,.session-timer-reopen{position:fixed;z-index:19;top:16px;right:16px}
+.session-timer-popup{width:min(330px,calc(100vw - 32px));padding:15px 16px 13px;background:linear-gradient(160deg,#1c2a38,#121c28);border:1px solid #526b80;border-radius:15px;box-shadow:0 12px 40px #0008}
+.session-timer-popup[hidden],.session-timer-reopen[hidden]{display:none}
+.session-timer-header,.session-timer-actions,.session-timer-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.session-timer-actions{justify-content:flex-end}
+.timer-popup-button{width:27px;height:27px;border:1px solid var(--line);border-radius:8px;background:var(--surface2);color:var(--text);font-size:18px;line-height:1}
+.session-timer-clock{display:block;margin:10px 0 2px;font-size:32px;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.session-estimate-label{font-size:10px;color:var(--muted)}
+.session-estimate-track{height:5px;margin:8px 0 13px;background:#29394b;border-radius:8px;overflow:hidden}
+.session-estimate-track div{width:0;height:100%;background:var(--accent);transition:width .25s}
+.session-estimated-exercise{display:grid;gap:5px;padding-top:11px;border-top:1px solid var(--line)}
+.session-estimated-exercise strong{font-size:13px;line-height:1.35}
+.session-timer-footer{margin-top:11px}
+.session-timer-footer span{font-size:10px;color:var(--muted)}
+.session-timer-footer .text-button{white-space:nowrap}
+.session-timer-details>p{margin:8px 0 0;color:#9eafbf;font-size:9px}
+.session-timer-expand{display:none;width:100%;margin-top:10px;border:0;background:transparent;color:var(--accent);font-size:11px;font-weight:750}
+.session-timer-popup.minimized{width:min(260px,calc(100vw - 32px));padding-bottom:10px}
+.session-timer-popup.minimized .session-timer-clock{font-size:25px;margin:0}
+.session-timer-popup.minimized .session-timer-details{display:none}
+.session-timer-popup.minimized .session-timer-expand{display:block}
+.session-timer-reopen{border:1px solid #526b80;border-radius:12px;background:#1c2a38;color:var(--text);padding:11px 14px;font-size:11px;font-weight:800;box-shadow:0 8px 28px #0007}
+@media(max-width:760px){.week-pill{padding:8px 10px}.session-timer-popup,.session-timer-reopen{top:10px;right:10px}.session-timer-popup{padding:13px}.session-timer-popup.minimized{width:min(230px,calc(100vw - 20px))}}
